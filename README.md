@@ -299,3 +299,43 @@ $ ./temper.py --json
 ```
 
 Similar JSON output can be generated with the --list option.
+
+## Docker
+
+Run with single USB device (you need to lookup and pass correct device):
+
+```shell
+$  docker run --rm --device=/dev/hidraw7 nbarnum/temperpy
+Bus 001 Dev 008 413d:2107 TEMPerGold_V3.1 36.0C 96.8F - - - -
+```
+
+Run unsafely with privileged container (*NOT RECOMMENDED*):
+
+```shell
+$  docker run --rm --privileged nbarnum/temperpy
+Bus 001 Dev 008 413d:2107 TEMPerGold_V3.1 35.9C 96.7F - - - -
+```
+
+Supports normal cli flags:
+
+```shell
+$  docker run --rm --device=/dev/hidraw7 nbarnum/temperpy --json
+[
+    {
+        "vendorid": 16701,
+        "productid": 8455,
+        "manufacturer": "",
+        "product": "",
+        "busnum": 1,
+        "devnum": 8,
+        "devices": [
+            "hidraw6",
+            "hidraw7"
+        ],
+        "firmware": "TEMPerGold_V3.1",
+        "hex_firmware": "54454d506572476f6c645f56332e3120",
+        "hex_data": "80800e164e200000",
+        "internal temperature": 36.06
+    }
+]
+```
